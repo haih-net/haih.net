@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 import {
   ModalOverlay,
@@ -22,6 +22,12 @@ export const Modal: React.FC<ModalProps> = ({
   title,
   children,
 }) => {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -52,7 +58,9 @@ export const Modal: React.FC<ModalProps> = ({
     }
   }, [isOpen, handleKeyDown])
 
-  if (!isOpen) return null
+  if (!isOpen || !mounted) {
+    return null
+  }
 
   return createPortal(
     <ModalOverlay onClick={handleOverlayClick}>
