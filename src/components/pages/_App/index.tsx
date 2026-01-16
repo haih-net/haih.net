@@ -15,6 +15,7 @@ import Head from 'next/head'
 import { GlobalStyle } from 'src/theme/GlobalStyle'
 import { useMeQuery } from 'src/gql/generated'
 import { AppContextProvider } from 'src/components/AppContext'
+import { Layout } from 'src/components/Layout'
 import { SnackbarProvider, Snackbar } from 'src/ui-kit/Snackbar'
 import { getInitialProps } from './getInitialProps'
 import { useScrollPage } from 'src/hooks/useScrollPage'
@@ -73,7 +74,7 @@ export const App: MainApp<AppProps> = ({ Component, pageProps }) => {
         <ApolloProvider client={apolloClient}>
           <AppContextProvider user={user}>
             <SnackbarProvider>
-              <>{content}</>
+              <Layout>{content}</Layout>
               <Snackbar />
             </SnackbarProvider>
           </AppContextProvider>

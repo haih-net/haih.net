@@ -1,0 +1,31 @@
+query postsConnection($where: PostWhereInput, $skip: Int, $take: Int = 10, $tagIds: [String!]) {
+  postsCount(where: $where, tagIds: $tagIds)
+  posts(where: $where, skip: $skip, take: $take, tagIds: $tagIds) {
+    ...Post_
+  }
+}
+
+query post($id: String!) {
+  object: post(id: $id) {
+    ...Post_
+  }
+}
+
+fragment Post_ on Post {
+  id
+  createdAt
+  updatedAt
+  status
+  revision
+  title
+  description
+  intro
+  content
+  createdById
+  CreatedBy {
+    ...UserNoNesting
+  }
+  Tags {
+    ...TagNoNesting
+  }
+}

@@ -36,7 +36,8 @@ prisma/migrations/*_migration.sql
 storybook-static/
 
 # Shared (uploads, not tracked)
-shared/
+/shared
+/uploads
 
 # Generated
 src/gql/generated/

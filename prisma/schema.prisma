@@ -33,7 +33,10 @@ model User {
   intro     String?    @db.Text
   content   String?    @db.Text
 
-  Tokens Token[]
+  Tokens       Token[]
+  EthAccount   EthAccount?
+  PostsCreated Post[]
+  TagsCreated  Tag[]
 
   @@unique([email])
   @@unique([username])
@@ -47,4 +50,87 @@ model Token {
   User      User?     @relation(fields: [userId], references: [id])
 
   @@index(createdAt)
+}
+
+model EthAccount {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  createdAt DateTime @default(now()) @db.Date()
+  updatedAt DateTime @default(now()) @updatedAt @db.Date()
+  address   String   @db.VarChar(42)
+  userId    String?  @unique @db.VarChar(36)
+  User      User?    @relation(fields: [userId], references: [id])
+
+  @@unique([address])
+}
+
+enum PostStatus {
+  draft
+  published
+  unpublished
+}
+
+// ============================================================================
+// POST & POST REVISION
+// AI-agent note: Post and PostRevision share content fields (status, title,
+// description, intro, content, signature). When modifying these fields in one
+// model, ALWAYS update the other model accordingly to keep them in sync.
+// ============================================================================
+
+model Post {
+  id          String         @id @default(cuid()) @db.VarChar(36)
+  createdAt   DateTime       @default(now()) @db.Date()
+  updatedAt   DateTime       @default(now()) @updatedAt @db.Date()
+  revision    Int            @default(1)
+  createdById String         @db.VarChar(36)
+  CreatedBy   User           @relation(fields: [createdById], references: [id])
+  Revisions   PostRevision[]
+  Tags        Tag[]
+
+  // -- Shared content fields (keep in sync with PostRevision) --
+  status      PostStatus @default(draft)
+  title       String?    @db.VarChar(512)
+  description String?    @db.VarChar(3072)
+  intro       String?    @db.Text
+  content     String     @db.Text
+  signature   String?    @db.Text
+  // -- End of shared content fields --
+
+  @@index([createdById])
+  @@index([createdAt])
+  @@index([status])
+}
+
+model PostRevision {
+  id        String   @id @default(cuid()) @db.VarChar(36)
+  createdAt DateTime @default(now()) @db.Date()
+  postId    String   @db.VarChar(36)
+  Post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  // -- Shared content fields (keep in sync with Post) --
+  status      PostStatus
+  title       String?    @db.VarChar(512)
+  description String?    @db.VarChar(3072)
+  intro       String?    @db.Text
+  content     String     @db.Text
+  signature   String?    @db.Text
+  // -- End of shared content fields --
+
+  @@index([postId])
+  @@index([createdAt])
+}
+
+// ============================================================================
+
+model Tag {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  createdAt   DateTime @default(now()) @db.Date()
+  updatedAt   DateTime @default(now()) @updatedAt @db.Date()
+  name        String   @db.VarChar(128)
+  createdById String   @db.VarChar(36)
+  CreatedBy   User     @relation(fields: [createdById], references: [id])
+  Posts       Post[]
+
+  @@unique([name])
+  @@index([createdAt])
+  @@index([createdById])
 }

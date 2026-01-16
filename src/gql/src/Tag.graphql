@@ -1,0 +1,23 @@
+query tags {
+  tags {
+    ...Tag_
+  }
+}
+
+query tag($id: String!) {
+  object: tag(id: $id) {
+    ...Tag_
+  }
+}
+
+fragment Tag_ on Tag {
+  id
+  createdAt
+  name
+  createdById
+}
+
+fragment TagNoNesting on Tag {
+  id
+  name
+}

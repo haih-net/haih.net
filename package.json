@@ -79,6 +79,7 @@
     "remark-mdx": "^3.1.1",
     "styled-components": "^6.1.19",
     "unist-util-visit": "^5.0.0",
+    "web3": "^4.16.0",
     "ws": "^8.18.3",
     "yup": "^1.7.1"
   },

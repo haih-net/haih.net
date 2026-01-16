@@ -28,7 +28,8 @@ async function startServer() {
   const server = express()
 
   // Static files from shared (uploads, not tracked)
-  server.use('/shared', express.static(cwd + '/shared'))
+  server.use(express.static(cwd + '/shared'))
+  server.use(express.static(cwd + '/uploads'))
 
   // Proxy /api to GraphQL server (HTTP + WebSocket)
   server.use(
