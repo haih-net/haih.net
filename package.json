@@ -9,7 +9,7 @@
     "build:front": "next build",
     "build:server": "tsc --project tsconfig.server.json && npm run copy-statics",
     "build:analyze": "cross-env ANALYZE=true npm run build",
-    "copy-statics": "copyfiles -u 1 \"server/**/*.graphql\" \"server/**/*.md\" dist/server/",
+    "copy-statics": "copyfiles -u 0 \"server/**/*.graphql\" \"server/**/*.md\" dist/server/",
     "clean": "rimraf ./dist && rimraf ./.next",
     "start": "cross-env NODE_ENV=production TS_NODE_BASEURL=./dist/server node -r tsconfig-paths/register dist/server/server/index.js",
     "types": "tsc --noEmit",
