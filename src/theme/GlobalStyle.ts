@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import { markdownStyles } from './markdownStyles'
+import { customStyles } from './customStyles'
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -31,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: #4043f9;
+    color: ${({ theme }) => theme.colors.primary};
     
     &:hover {
       text-decoration: underline;
@@ -58,4 +59,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   ${markdownStyles};
+
+  ${customStyles};
 `

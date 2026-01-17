@@ -8,7 +8,9 @@ const breakpoints = {
 
 const colors = {
   // Primary colors
-  primary: '#2196f3',
+  primary: '#667eea',
+  primaryDark: '#764ba2',
+  primaryLight: '#8b9ff5',
   secondary: '#757575',
 
   // States

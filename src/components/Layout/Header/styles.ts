@@ -18,10 +18,11 @@ export const LogoLink = styled(Link)`
   align-items: center;
   gap: 12px;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.primary};
 
   &:hover {
     opacity: 0.8;
+    text-decoration: none;
   }
 `
 
