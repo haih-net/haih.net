@@ -23,7 +23,7 @@ COPY . .
 RUN npm run prisma:deploy
 RUN npm run generate
 
-RUN if [ "$ENV_MODE" = "production" ] ; then yarn build ; fi
+RUN if [ "$ENV_MODE" = "production" ] ; then npm run build ; fi
 
 # Expose ports
 EXPOSE 3000 4000
