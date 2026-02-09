@@ -1,8 +1,11 @@
 import { Request, Response } from 'express'
+import { prismaClient } from 'server/prisma'
+import { buildPostWhere } from 'server/schema/types/Post/helpers/buildPostWhere'
 
 export enum SitemapSection {
   index = '/sitemap.xml',
   main = '/sitemap/main.xml',
+  posts = '/sitemap/posts.xml',
 }
 
 type UrlItem = {
@@ -46,6 +49,9 @@ export const generateSitemapIndex = async ({
     <sitemap>
         <loc>${siteOrigin}/sitemap/main.xml</loc>
     </sitemap>
+    <sitemap>
+        <loc>${siteOrigin}${SitemapSection.posts}</loc>
+    </sitemap>
 </sitemapindex>`
 }
 
@@ -68,6 +74,34 @@ export const generateSitemapMain = async (
   return generateSitemapXML(xmlData, props)
 }
 
+const postsWhere = buildPostWhere({
+  status: 'published',
+})
+
+export const generateSitemapPosts = async (
+  props: SitemapGeneratorProps,
+): Promise<string> => {
+  const posts = await prismaClient.post.findMany({
+    where: postsWhere,
+    orderBy: {
+      createdAt: 'asc',
+    },
+  })
+
+  const xmlData: UrlItem[] = posts.map((n) => {
+    const { id, updatedAt } = n
+
+    const uri = `/posts/${id}`
+
+    return {
+      url: `/${(uri ?? '').replaceAll(/^\/+|\/+$/g, '')}`,
+      updatedAt: updatedAt.toISOString(),
+    }
+  })
+
+  return generateSitemapXML(xmlData, props)
+}
+
 /**
  * Обрабатывает запрос для генерации sitemap
  * @param type тип sitemap (cities или companies)
@@ -84,6 +118,9 @@ export const generateSitemap = async (req: Request, res: Response) => {
       break
     case SitemapSection.main:
       res.send(await generateSitemapMain({ siteOrigin }))
+      break
+    case SitemapSection.posts:
+      res.send(await generateSitemapPosts({ siteOrigin }))
       break
     default:
       res.status(404).send('Not found')
