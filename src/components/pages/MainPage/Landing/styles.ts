@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import styled, { css } from 'styled-components'
 
 export const LandingStyled = styled.section`
@@ -46,7 +47,9 @@ export const LandingCTAButtonsStyled = styled.div`
   flex-wrap: wrap;
 `
 
-export const LandingButtonStyled = styled.a<{ $primary?: boolean }>`
+type LandingButtonStyledProps = { $primary?: boolean }
+
+export const LandingButtonStyled = styled(Link)<LandingButtonStyledProps>`
   display: inline-flex;
   align-items: center;
   gap: 8px;
