@@ -71,14 +71,14 @@ export const App: MainApp<AppProps> = ({ Component, pageProps }) => {
 
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <ApolloProvider client={apolloClient}>
-          <AppContextProvider user={user}>
-            <SnackbarProvider>
+        <SnackbarProvider>
+          <ApolloProvider client={apolloClient}>
+            <AppContextProvider user={user}>
               <Layout>{content}</Layout>
               <Snackbar />
-            </SnackbarProvider>
-          </AppContextProvider>
-        </ApolloProvider>
+            </AppContextProvider>
+          </ApolloProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </>
   )

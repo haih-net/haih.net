@@ -18,6 +18,7 @@ module.exports = [
       '.next/**',
       'tsconfig.tsbuildinfo',
       'dist/**',
+      'docker/**',
       'next-env.d.ts',
       '**/generated/**',
       'eslint.config.cjs',
