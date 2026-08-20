@@ -62,6 +62,7 @@ model User {
   EthTransactions EthTransaction[]
 
   PostsCreated Post[]
+  TagsCreated  Tag[]
 
   Referrer   User?   @relation(fields: [referrerId], references: [id], name: "Referrer")
   Referrals  User[]  @relation(name: "Referrer")
@@ -918,6 +919,7 @@ model Post {
   createdById String         @db.VarChar(36)
   CreatedBy   User           @relation(fields: [createdById], references: [id])
   Revisions   PostRevision[]
+  Tags        Tag[]
 
   // -- Shared content fields (keep in sync with PostRevision) --
   image       String?    @db.Text
@@ -955,6 +957,20 @@ model PostRevision {
 
   @@index([postId])
   @@index([createdAt])
+}
+
+model Tag {
+  id          String   @id @default(cuid()) @db.VarChar(36)
+  createdAt   DateTime @default(now()) @db.Timestamp(3)
+  updatedAt   DateTime @default(now()) @updatedAt @db.Timestamp(3)
+  name        String   @db.VarChar(128)
+  createdById String   @db.VarChar(36)
+  CreatedBy   User     @relation(fields: [createdById], references: [id])
+  Posts       Post[]
+
+  @@unique([name])
+  @@index([createdAt])
+  @@index([createdById])
 }
 
 // ============================================
