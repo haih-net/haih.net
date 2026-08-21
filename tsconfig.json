@@ -27,7 +27,9 @@
     "resolveJsonModule": true,
     "incremental": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@/*": ["./src/Custom/lovable/src/*"]
+    }
   },
   "include": [
     "next-env.d.ts",

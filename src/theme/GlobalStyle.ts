@@ -26,13 +26,13 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 16px;
   }
 
-  #__next {
+  /* #__next {
     height: 100%;
-  }
+  } */
 
   a {
     text-decoration: none;
-    color: ${theme.colors.foreground};
+    /* color: ${theme.colors.foreground}; */
     
     &:hover {
       text-decoration: underline;

@@ -1,3 +1,5 @@
+import { lovableTheme } from '@/theme'
+
 const breakpoints = {
   xs: 480,
   sm: 768,
@@ -112,6 +114,8 @@ export const theme = {
     popover: 1100,
     tooltip: 1200,
   },
+
+  ...lovableTheme,
 }
 
 export type Theme = typeof theme
