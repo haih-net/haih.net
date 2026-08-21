@@ -54,3 +54,5 @@ export function PostPage({ post }: { post: Post }) {
     </>
   )
 }
+
+export const LovablePostPage = PostPage

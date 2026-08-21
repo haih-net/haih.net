@@ -13,7 +13,7 @@ export const PostCardStyled = styled.article`
   }
 
   @media (min-width: ${(p) => p.theme.lovable.bp.md}) {
-    grid-template-columns: 17rem 1fr;
+    grid-template-columns: auto 1fr;
     align-items: start;
     gap: 1.75rem;
     padding: 2rem 0;

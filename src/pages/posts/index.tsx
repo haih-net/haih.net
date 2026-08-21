@@ -1,1 +1,1 @@
-export { PostsPage as default } from 'src/components/pages/Posts'
+export { PostsPageCustom as default } from 'src/Custom/pages/Posts'

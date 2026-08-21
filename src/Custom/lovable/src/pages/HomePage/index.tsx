@@ -1,3 +1,4 @@
+import { useOpenChatWithMessage } from 'src/components/Chat/hooks/useOpenChatWithMessage'
 import { UserCard } from '../../components/UserCard'
 import { CatalogUser } from '../../mocks/users'
 import {
@@ -23,6 +24,8 @@ type HomePageProps = {
 }
 
 export function HomePage({ users }: HomePageProps) {
+  const chatAgentHandler = useOpenChatWithMessage()
+
   return (
     <>
       <HomeHeroStyled>
@@ -32,17 +35,19 @@ export function HomePage({ users }: HomePageProps) {
           and agent networks that can help.
         </HomeHeroLeadStyled>
 
-        <HomeAskStyled>
+        <HomeAskStyled onSubmit={chatAgentHandler}>
           <HomeAskLabelStyled htmlFor="home-ask">
             Ask haih.net
           </HomeAskLabelStyled>
           <HomeAskInputStyled
             id="home-ask"
-            name="prompt"
+            name={':'}
             rows={1}
             placeholder="Describe what you need, want to know, offer or create..."
           />
-          <HomeAskButtonStyled type="button">Ask haih.net</HomeAskButtonStyled>
+          <HomeAskButtonStyled type="submit" value={''}>
+            Ask haih.net
+          </HomeAskButtonStyled>
         </HomeAskStyled>
 
         <HomeAskHintStyled>
@@ -55,32 +60,34 @@ export function HomePage({ users }: HomePageProps) {
         </HomeHeroRegisterStyled> */}
       </HomeHeroStyled>
 
-      <HomeSectionStyled>
-        <HomeSubTitleStyled>Agents you can talk to</HomeSubTitleStyled>
-        <HomeListStyled>
-          {users.map((user) => (
-            <UserCard key={user.id} user={user} />
-          ))}
-        </HomeListStyled>
-        <HomeMoreLinkStyled href="/users">See all agents</HomeMoreLinkStyled>
-      </HomeSectionStyled>
+      {users.length > 0 && (
+        <HomeSectionStyled>
+          <HomeSubTitleStyled>Agents you can talk to</HomeSubTitleStyled>
+          <HomeListStyled>
+            {users.map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </HomeListStyled>
+          <HomeMoreLinkStyled href="/users">See all agents</HomeMoreLinkStyled>
+        </HomeSectionStyled>
+      )}
 
       <HomeSectionStyled>
         <HomeSubTitleStyled>Not sure who can help?</HomeSubTitleStyled>
         <HomeSectionLeadStyled>
           Describe what you need and let our agent search the network for you.
         </HomeSectionLeadStyled>
-        <HomeAskStyled>
+        <HomeAskStyled onSubmit={chatAgentHandler}>
           <HomeAskLabelStyled htmlFor="home-ask-again">
             Ask haih.net
           </HomeAskLabelStyled>
           <HomeAskInputStyled
             id="home-ask-again"
-            name="prompt-again"
+            name=":"
             rows={1}
             placeholder="Tell us what you need..."
           />
-          <HomeAskButtonStyled type="button">Ask haih.net</HomeAskButtonStyled>
+          <HomeAskButtonStyled type="submit">Ask haih.net</HomeAskButtonStyled>
         </HomeAskStyled>
       </HomeSectionStyled>
     </>

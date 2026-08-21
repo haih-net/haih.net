@@ -1,0 +1,35 @@
+import { Page } from 'src/components/pages/_App/interfaces'
+import { postsPageGetInitialProps } from './postsPageGetInitialProps'
+import { usePostsConnectionQuery } from 'src/gql/generated'
+import { SeoHeaders } from 'src/components/seo/SeoHeaders'
+import { PostsPageProps } from './interfaces'
+import { getPostsConnectionQueryVariables } from './helpers'
+import { useAppContext } from 'src/components/AppContext'
+import { LovablePostsPage } from '@/pages/PostsPage'
+
+export const PostsPageCustom: Page<PostsPageProps> = ({ page, siteOrigin }) => {
+  const { user: currentUser } = useAppContext()
+
+  const postsResponse = usePostsConnectionQuery({
+    variables: getPostsConnectionQueryVariables({
+      page,
+      currentUser,
+    }),
+  })
+
+  const posts = postsResponse.data?.posts
+  const count = postsResponse.data?.postsCount ?? 0
+
+  return (
+    <>
+      <SeoHeaders
+        title="Posts"
+        siteOrigin={siteOrigin}
+        canonical={`/posts${page > 1 ? `?page=${page}` : ''}`}
+      />
+      <LovablePostsPage posts={posts ?? []} count={count} page={page} />
+    </>
+  )
+}
+
+PostsPageCustom.getInitialProps = postsPageGetInitialProps

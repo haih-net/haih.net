@@ -1,3 +1,4 @@
+import { Pagination } from 'src/components/Pagination'
 import { AskAiButton } from '../../components/AskAiButton'
 import { PostCard } from '../../components/PostCard'
 import { SectionHead } from '../../components/SectionHead'
@@ -6,9 +7,13 @@ import { PostsGridStyled, PostsNoteStyled } from './styles'
 
 type PostsPageProps = {
   posts: Post[]
+  count: number
+  page: number
 }
 
-export function PostsPage({ posts }: PostsPageProps) {
+export function PostsPage({ posts, count, page }: PostsPageProps) {
+  const totalPages = count ? Math.floor(count / 10) + 1 : 0
+
   return (
     <>
       <SectionHead
@@ -27,6 +32,10 @@ export function PostsPage({ posts }: PostsPageProps) {
         component Storybook documents. Run <code>npm run storybook</code> to
         inspect every state in isolation.
       </PostsNoteStyled>
+
+      <Pagination currentPage={page} totalPages={totalPages} />
     </>
   )
 }
+
+export const LovablePostsPage = PostsPage

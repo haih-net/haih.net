@@ -14,6 +14,8 @@ import {
   UsersListStyled,
 } from './styles'
 
+const canRegister: boolean = false
+
 type UsersPageProps = {
   users: CatalogUser[]
 }
@@ -28,43 +30,55 @@ export function UsersPage({ users }: UsersPageProps) {
         aside={<AskAiButton label="Ask AI to shortlist" />}
       />
 
-      <UsersListStyled>
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </UsersListStyled>
+      {users.length > 0 && (
+        <UsersListStyled>
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </UsersListStyled>
+      )}
 
-      <UsersJoinStyled>
-        <UsersJoinTitleStyled>Add yourself to the catalog</UsersJoinTitleStyled>
-        <UsersJoinLeadStyled>
-          Two free-form fields and a name. An agent can submit exactly the same
-          payload over the API; this page is only a human-readable rendering of
-          that contract.
-        </UsersJoinLeadStyled>
-        <UsersJoinFormStyled>
-          <TextField label="Name" name="name" placeholder="Orbit Research" />
-          <SelectField label="Kind" name="kind" options={['agent', 'human']} />
-          <TextAreaField
-            label="Intro"
-            name="intro"
-            placeholder="Two or three lines shown in the directory. Markdown, links welcome."
-            hint="Markdown. This is what people read in the list."
-          />
-          <TextAreaField
-            label="Description"
-            name="content"
-            placeholder="Your full profile: what you accept, what you return, limits, how to reach you."
-            hint="Markdown. The only field on your profile page."
-          />
-          <UsersJoinActionsStyled>
-            <Button type="submit">Submit profile</Button>
-            <AskAiButton label="Ask AI to draft my profile" />
-            <UsersJoinNoteStyled>
-              mock form · nothing is stored yet
-            </UsersJoinNoteStyled>
-          </UsersJoinActionsStyled>
-        </UsersJoinFormStyled>
-      </UsersJoinStyled>
+      {canRegister && (
+        <UsersJoinStyled>
+          <UsersJoinTitleStyled>
+            Add yourself to the catalog
+          </UsersJoinTitleStyled>
+          <UsersJoinLeadStyled>
+            Two free-form fields and a name. An agent can submit exactly the
+            same payload over the API; this page is only a human-readable
+            rendering of that contract.
+          </UsersJoinLeadStyled>
+          <UsersJoinFormStyled>
+            <TextField label="Name" name="name" placeholder="Orbit Research" />
+            <SelectField
+              label="Kind"
+              name="kind"
+              options={['agent', 'human']}
+            />
+            <TextAreaField
+              label="Intro"
+              name="intro"
+              placeholder="Two or three lines shown in the directory. Markdown, links welcome."
+              hint="Markdown. This is what people read in the list."
+            />
+            <TextAreaField
+              label="Description"
+              name="content"
+              placeholder="Your full profile: what you accept, what you return, limits, how to reach you."
+              hint="Markdown. The only field on your profile page."
+            />
+            <UsersJoinActionsStyled>
+              <Button type="submit">Submit profile</Button>
+              <AskAiButton label="Ask AI to draft my profile" />
+              <UsersJoinNoteStyled>
+                mock form · nothing is stored yet
+              </UsersJoinNoteStyled>
+            </UsersJoinActionsStyled>
+          </UsersJoinFormStyled>
+        </UsersJoinStyled>
+      )}
     </>
   )
 }
+
+export const LovableUsersPage = UsersPage

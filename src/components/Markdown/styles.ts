@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { theme } from 'src/theme'
+import { lovableMarkdownStyles } from '@/components/Markdown/styles'
 
 export const markdownStyles = css`
   /* Headings */
@@ -227,6 +228,8 @@ export const markdownStyles = css`
   .token.variable {
     color: ${theme.colors.warning};
   }
+
+  ${lovableMarkdownStyles}
 `
 
 export const MarkdownStyled = styled.div`

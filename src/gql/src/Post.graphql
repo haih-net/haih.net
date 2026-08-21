@@ -2,6 +2,9 @@ query postsConnection($where: PostWhereInput, $skip: Int, $take: Int = 10) {
   postsCount(where: $where)
   posts(where: $where, skip: $skip, take: $take) {
     ...PostNoNesting
+    CreatedBy {
+      ...UserNoNesting
+    }
   }
 }
 

@@ -21,8 +21,7 @@ export function useOpenChatWithMessage() {
         const submitButton = form.querySelector(
           'button[type="submit"]',
         ) as HTMLButtonElement
-        const buttonText =
-          submitButton?.value || submitButton?.textContent || ''
+        const buttonText = submitButton?.value || ''
 
         const fields: string[] = []
 

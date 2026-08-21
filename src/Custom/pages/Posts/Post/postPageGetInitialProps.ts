@@ -1,0 +1,28 @@
+import { Page } from 'src/components/pages/_App/interfaces'
+import { PostPageProps } from './interfaces'
+import { PostDocument, PostQuery, PostQueryVariables } from 'src/gql/generated'
+
+export const postPageGetInitialProps: Page<PostPageProps>['getInitialProps'] =
+  async ({ query, apolloClient }) => {
+    const postId: string | undefined =
+      typeof query.id === 'string' && query.id ? query.id : undefined
+
+    const post = postId
+      ? await apolloClient
+          // eslint-disable-next-line @typescript-eslint/no-deprecated
+          .query<PostQuery, PostQueryVariables>({
+            query: PostDocument,
+            variables: {
+              where: {
+                id: postId,
+              },
+            },
+          })
+          .then((r) => r.data?.object)
+      : undefined
+
+    return {
+      postId,
+      statusCode: !post ? 404 : undefined,
+    }
+  }

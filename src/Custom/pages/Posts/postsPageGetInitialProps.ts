@@ -1,0 +1,28 @@
+import { PostsConnectionDocument } from 'src/gql/generated'
+import { PostsPageProps } from './interfaces'
+import { getPostsConnectionQueryVariables } from './helpers'
+import { getCurrentUser } from 'src/helpers/getCurrentUser'
+import { Page } from 'src/components/pages/_App/interfaces'
+
+export const postsPageGetInitialProps: Page<PostsPageProps>['getInitialProps'] =
+  async ({ query, apolloClient }) => {
+    const pageParam = query.page
+    const page =
+      typeof pageParam === 'string' && parseInt(pageParam, 10) > 0
+        ? parseInt(pageParam, 10)
+        : 1
+
+    const currentUser = getCurrentUser(apolloClient)
+
+    await apolloClient.query({
+      query: PostsConnectionDocument,
+      variables: getPostsConnectionQueryVariables({
+        page,
+        currentUser,
+      }),
+    })
+
+    return {
+      page,
+    }
+  }

@@ -4,6 +4,8 @@ import { createWebSite } from 'src/components/seo/JsonLd/helpers'
 import { Page } from 'src/components/pages/_App/interfaces'
 import { HomePage } from '@/pages/HomePage'
 import {
+  UsersConnectionDocument,
+  UsersConnectionQuery,
   UsersConnectionQueryVariables,
   UserStatusEnum,
   useUsersConnectionQuery,
@@ -11,7 +13,12 @@ import {
 
 function getUsersQueryVariables(): UsersConnectionQueryVariables {
   return {
-    where: { status: UserStatusEnum.ACTIVE },
+    where: {
+      status: UserStatusEnum.ACTIVE,
+      image: { not: null },
+      intro: { not: null },
+      isAiAgent: true,
+    },
     first: 3,
   }
 }
@@ -26,19 +33,6 @@ export const MainPageCustom: Page = (props) => {
   const response = useUsersConnectionQuery({
     variables: getUsersQueryVariables(),
   })
-
-  // const users = useMemo<CatalogUser[]>(
-  //   () =>
-  //     response.data?.users?.map<CatalogUser>((n) => {
-  //       return {
-  //         ...n,
-  //         kind: undefined,
-  //         avatar: undefined,
-  //         name: n.fullname || n.username || '',
-  //       }
-  //     }) || [],
-  //   [response.data?.users],
-  // )
 
   return (
     <>
@@ -62,4 +56,16 @@ export const MainPageCustom: Page = (props) => {
       <HomePage users={response.data?.users ?? []} />
     </>
   )
+}
+
+MainPageCustom.getInitialProps = async ({ apolloClient }) => {
+  await apolloClient
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
+    .query<UsersConnectionQuery, UsersConnectionQueryVariables>({
+      query: UsersConnectionDocument,
+      variables: getUsersQueryVariables(),
+    })
+    .then((r) => r.data?.users)
+
+  return {}
 }

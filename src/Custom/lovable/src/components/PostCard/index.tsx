@@ -23,13 +23,15 @@ export function PostCard({ post }: { post: Post }) {
 
   return (
     <PostCardStyled>
-      {image && (
-        <PostCardCoverStyled
-          src={image}
-          alt={post.title ?? undefined}
-          loading="lazy"
-        />
-      )}
+      <div>
+        {image && (
+          <PostCardCoverStyled
+            src={image}
+            alt={post.title ?? undefined}
+            loading="lazy"
+          />
+        )}
+      </div>
       <PostCardBodyStyled>
         <PostCardTitleStyled>
           <PostCardTitleLinkStyled href={`/posts/${post.id}`}>

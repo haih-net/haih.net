@@ -26,8 +26,10 @@ builder.mutationField('updatePost', (t) =>
         throw new Error('Post not found')
       }
 
-      if (post.createdById !== ctx.currentUser.id) {
-        throw new Error('Forbidden')
+      if (!ctx.currentUser.sudo) {
+        if (post.createdById !== ctx.currentUser.id) {
+          throw new Error('Forbidden')
+        }
       }
 
       const validation = validatePost({
