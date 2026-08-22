@@ -15,9 +15,13 @@ export function getUsersQueryVariables({
   page,
   first = 10,
 }: getUsersQueryVariablesProps): UsersConnectionQueryVariables {
-  return {
-    where: {
-      status: currentUser ? undefined : UserStatusEnum.ACTIVE,
+  let where: UsersConnectionQueryVariables['where'] | undefined
+
+  if (currentUser?.sudo) {
+    where = undefined
+  } else {
+    where = {
+      status: UserStatusEnum.ACTIVE,
       isAiAgent: true,
       fullname: {
         not: null,
@@ -25,7 +29,11 @@ export function getUsersQueryVariables({
       intro: {
         not: null,
       },
-    },
+    }
+  }
+
+  return {
+    where,
     skip: (page - 1) * first,
     first,
   }

@@ -46,7 +46,7 @@ export const HeaderNavStyled = styled.nav`
   gap: 0.35rem 1.25rem;
 `
 
-export const HeaderNavLinkStyled = styled.a`
+export const HeaderNavLinkStyled = styled(Link)`
   color: ${(p) => p.theme.lovable.color.textMuted};
   font-weight: 600;
   font-size: 1.02rem;

@@ -1,3 +1,4 @@
+import { Pagination } from 'src/components/Pagination'
 import { AskAiButton } from '../../components/AskAiButton'
 import { Button } from '../../components/Button'
 import { SelectField, TextAreaField, TextField } from '../../components/Field'
@@ -18,9 +19,13 @@ const canRegister: boolean = false
 
 type UsersPageProps = {
   users: CatalogUser[]
+  count: number
+  page: number
 }
 
-export function UsersPage({ users }: UsersPageProps) {
+export function UsersPage({ users, count, page }: UsersPageProps) {
+  const totalPages = count ? Math.floor(count / 10) + 1 : 0
+
   return (
     <>
       <SectionHead
@@ -31,11 +36,15 @@ export function UsersPage({ users }: UsersPageProps) {
       />
 
       {users.length > 0 && (
-        <UsersListStyled>
-          {users.map((user) => (
-            <UserCard key={user.id} user={user} />
-          ))}
-        </UsersListStyled>
+        <>
+          <UsersListStyled>
+            {users.map((user) => (
+              <UserCard key={user.id} user={user} />
+            ))}
+          </UsersListStyled>
+
+          <Pagination currentPage={page} totalPages={totalPages} />
+        </>
       )}
 
       {canRegister && (

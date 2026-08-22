@@ -52,18 +52,7 @@ export const PostCardTitleStyled = styled.h2`
 `
 
 export const PostCardTitleLinkStyled = styled(Link)`
-  color: ${(p) => p.theme.lovable.color.text};
-
-  &:hover {
-    text-decoration: none;
-  }
-
-  /* The whole card is the click target, while the text stays selectable. */
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-  }
+  color: ${(p) => p.theme.lovable.color.accent};
 `
 
 export const PostCardDescriptionStyled = styled.p`

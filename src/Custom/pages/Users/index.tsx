@@ -8,6 +8,7 @@ import { useAppContext } from 'src/components/AppContext'
 import { useMemo } from 'react'
 import { LovableUsersPage } from '@/pages/UsersPage'
 import { Page } from 'src/components/pages/_App/interfaces'
+import { UsersView } from 'src/components/pages/Users/View'
 
 export const UsersPageCustom: Page<UsersPageProps> = ({ page, siteOrigin }) => {
   const { user: currentUser } = useAppContext()
@@ -28,12 +29,21 @@ export const UsersPageCustom: Page<UsersPageProps> = ({ page, siteOrigin }) => {
         siteOrigin={siteOrigin}
         canonical={`/users${page > 1 ? `?page=${page}` : ''}`}
       />
-      <LovableUsersPage
-        users={users}
-        // page={page}
-        // count={response.data?.usersCount ?? 0}
-        // limit={response.variables.first || 10}
-      />
+
+      {currentUser?.sudo ? (
+        <UsersView
+          users={users}
+          page={page}
+          count={response.data?.usersCount ?? 0}
+          limit={response.variables.first || 10}
+        />
+      ) : (
+        <LovableUsersPage
+          users={users}
+          page={page}
+          count={response.data?.usersCount ?? 0}
+        />
+      )}
     </>
   )
 }
