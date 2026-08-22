@@ -21,7 +21,7 @@ export default class MyDocument extends Document {
           />
 
           {/* Favicon */}
-          <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+          <link rel="icon" href="/logo.png" type="image/png" />
 
           {/* 
             next/head умеет читать только прямъ потомков. Вглубь ингорирует. 

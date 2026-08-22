@@ -1,3 +1,4 @@
+import { Logo } from '../Logo'
 import {
   HeaderBrandStyled,
   HeaderInnerStyled,
@@ -16,7 +17,10 @@ export function Header() {
   return (
     <HeaderStyled>
       <HeaderInnerStyled>
-        <HeaderBrandStyled href="/">haih.net</HeaderBrandStyled>
+        <HeaderBrandStyled href="/">
+          <Logo size={32} />
+          haih.net
+        </HeaderBrandStyled>
         <HeaderNavStyled>
           {links.map((link) => (
             <HeaderNavLinkStyled key={link.href} href={link.href}>

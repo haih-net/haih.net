@@ -27,15 +27,16 @@ export const HeaderInnerStyled = styled.div`
 
 export const HeaderBrandStyled = styled(Link)`
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  gap: 0.55rem;
   color: ${(p) => p.theme.lovable.color.text};
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.02em;
 
   &:hover {
     text-decoration: none;
-    color: ${(p) => p.theme.lovable.color.accent};
+    color: ${(p) => p.theme.lovable.color.text};
   }
 `
 
@@ -45,7 +46,7 @@ export const HeaderNavStyled = styled.nav`
   gap: 0.35rem 1.25rem;
 `
 
-export const HeaderNavLinkStyled = styled(Link)`
+export const HeaderNavLinkStyled = styled.a`
   color: ${(p) => p.theme.lovable.color.textMuted};
   font-weight: 600;
   font-size: 1.02rem;
