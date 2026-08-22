@@ -3,6 +3,8 @@ import { theme } from 'src/theme'
 import { lovableMarkdownStyles } from '@/components/Markdown/styles'
 
 export const markdownStyles = css`
+  ${lovableMarkdownStyles}
+
   /* Headings */
   h1 {
     font-size: 2em;
@@ -228,8 +230,6 @@ export const markdownStyles = css`
   .token.variable {
     color: ${theme.colors.warning};
   }
-
-  ${lovableMarkdownStyles}
 `
 
 export const MarkdownStyled = styled.div`

@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components'
 
 export const lovableMarkdownStyles = css`
-  color: ${(p) => p.theme.lovable.color.text};
   font-size: 1.1rem;
   line-height: 1.75;
 
